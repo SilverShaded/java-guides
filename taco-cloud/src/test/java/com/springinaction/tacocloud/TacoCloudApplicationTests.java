@@ -1,10 +1,10 @@
-package com.example.hibernate5mysqlcrudrestapi;
+package com.springinaction.tacocloud;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class Hibernate5MysqlCrudRestApiApplicationTests {
+class TacoCloudApplicationTests {
 
     @Test
     void contextLoads() {
