@@ -1,21 +1,21 @@
 package com.springinaction.tacocloud.Controller;
 
+import com.springinaction.tacocloud.model.Taco;
 import lombok.extern.slf4j.Slf4j;
 import com.springinaction.tacocloud.model.Ingredient;
-import com.springinaction.tacocloud.model.Ingredient.*;
+import com.springinaction.tacocloud.model.Ingredient.Type;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Controller
 @RequestMapping("/design")
-@SessionAttributes("TacoOrder")
+@SessionAttributes("tacoOrder")
 public class DesignTacoController {
 
     @ModelAttribute
@@ -34,6 +34,27 @@ public class DesignTacoController {
         );
 
         Type[] types = Type.values();
-        
+        for (Type type : types) {
+            //eg:${wrap} value: [{"FLTO", "Flour Tortilla"},{"COTO", "Corn Tortilla"}]
+            model.addAttribute(type.toString().toLowerCase(),filterByType(ingredients,type));
+        }
+    }
+
+    @GetMapping
+    public String showDesignForm(Model model) {
+        model.addAttribute("taco",new Taco());
+        return "design";
+    }
+
+    @PostMapping
+    public String processDesign(Taco taco) {
+
+        log.info("Processing taco: "+ taco);
+        return "redirect:/orders/current";
+    }
+
+    private Iterable<Ingredient> filterByType(List<Ingredient> ingredients,Type type) {
+        return ingredients.stream().filter(x -> x.getType().equals(type))
+                .collect(Collectors.toList());
     }
 }
