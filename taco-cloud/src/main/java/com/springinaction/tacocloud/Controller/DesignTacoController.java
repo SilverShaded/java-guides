@@ -6,8 +6,10 @@ import com.springinaction.tacocloud.model.Ingredient;
 import com.springinaction.tacocloud.model.Ingredient.Type;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -47,7 +49,11 @@ public class DesignTacoController {
     }
 
     @PostMapping
-    public String processDesign(Taco taco) {
+    public String processDesign(@Valid @ModelAttribute("taco") Taco taco, Errors errors) {
+        //valid format have errors
+        if (errors.hasErrors()) {
+            return "design";
+        }
 
         log.info("Processing taco: "+ taco);
         return "redirect:/orders/current";
