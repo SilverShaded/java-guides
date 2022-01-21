@@ -2,6 +2,7 @@ package com.springinaction.tacocloud.model;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.CreditCardNumber;
+import org.springframework.data.annotation.Id;
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
@@ -16,25 +17,38 @@ public class TacoOrder implements Serializable {
 
     private static final Long serialVersionId = 1L;
 
+    @Id
     private Long id;
 
-    private Date createdAt;
+    private Date placedAt;
 
+    @Column("customer_name")
     @NotBlank(message = "Delivery name is required")
     private String deliveryName;
+
+    @Column("customer_street")
     @NotBlank(message = "Street is required")
     private String deliveryStreet;
+
+    @Column("customer_city")
     @NotBlank(message = "City is required")
     private String deliveryCity;
+
+    @Column("customer_state")
     @NotBlank(message = "State is required")
     private String deliveryState;
+
+    @Column("customer_zip")
     @NotBlank(message = "Zip code is required")
     private String deliveryZip;
+
     @CreditCardNumber(message = "Not a vaild credit card number")
     private String ccNumber;    //cc：credit card
+
     @Pattern(regexp = "^(0[1-9]|1[0-2])([\\/])([1-9][0-9])$",
             message = "Must be formatted MM/YY")
     private String ccExpiration;
+
     @Digits(integer = 3,fraction = 0,message = "Invalid CVV")
     private String ccCVV;//整数位3，小数位0
 

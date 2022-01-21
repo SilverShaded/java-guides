@@ -1,14 +1,21 @@
 package com.springinaction.tacocloud.model;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 
+import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.*;
 
 @Data
+
 public class Taco {
 
+    @Id
     private Long id;
 
     private Date createdAt;
@@ -19,5 +26,5 @@ public class Taco {
 
     @NotNull
     @Size(min = 1,message = "You must choose at least 1 ingredient")
-    private List<Ingredient> ingredients;
+    private List<IngredientRef> ingredients;
 }
