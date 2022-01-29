@@ -8,6 +8,9 @@
 </head>
 <body>
 <h1>Design your taco!</h1>
+<form method="post" th:action="@{/logout}">
+    <input type="submit" value="Logout">
+</form>
 <img th:src="@{/images/taco.png}"/>
 <form method="post" th:object="${taco}">
     <div class="grid">

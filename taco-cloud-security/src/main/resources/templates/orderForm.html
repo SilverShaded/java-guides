@@ -7,6 +7,9 @@
     <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 <body>
+<form method="post" th:action="@{/logout}">
+    <input type="submit" value="Logout">
+</form>
 <!--post请求后，表单提交到index，若无action，才提交到呈现表单的相同URL -->
 <form method="post" th:action="@{/orders}" th:object="${tacoOrder}">
     <h1>Order your taco creations!</h1>
