@@ -1,4 +1,4 @@
-package com.springinaction.tacocloud.seurity;
+package com.springinaction.tacocloud.Security;
 
 import com.springinaction.tacocloud.model.User;
 import lombok.Data;
@@ -17,8 +17,8 @@ public class RegistrationForm {
     private String phone;
 
     public User toUser(PasswordEncoder passwordEncoder) {
-        return new User(
-                username,passwordEncoder.encode(password),
-                fullname,street,city,state,zip,phone);
+        return new User(username, passwordEncoder.encode(password),
+                fullname, street, city, state, zip, phone);
     }
+
 }

@@ -1,4 +1,4 @@
-package com.springinaction.tacocloud.seurity;
+package com.springinaction.tacocloud.Security;
 
 import com.springinaction.tacocloud.Data.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
