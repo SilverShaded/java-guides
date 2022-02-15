@@ -18,6 +18,9 @@ public class TacoOrder implements Serializable {
 
     private static final Long serialVersionId = 1L;
 
+    @ManyToOne
+    private User user;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

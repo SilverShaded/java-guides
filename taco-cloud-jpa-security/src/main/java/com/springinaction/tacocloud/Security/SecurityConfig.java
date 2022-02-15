@@ -46,6 +46,9 @@ public class SecurityConfig {
                     .logoutSuccessUrl("/")
 
             .and()
+                .csrf()
+
+            .and()
                 .build();
     }
 

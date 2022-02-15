@@ -2,7 +2,10 @@ package com.springinaction.tacocloud.Controller;
 
 import com.springinaction.tacocloud.Data.OrderRepository;
 import com.springinaction.tacocloud.model.TacoOrder;
+import com.springinaction.tacocloud.model.User;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -24,20 +27,40 @@ public class OrderController {
     }
 
     @GetMapping("/current")
-    public String orderForm(Model model) {
-        model.addAttribute("tacoOrder",new TacoOrder());
+    public String orderForm(@AuthenticationPrincipal User user,
+                            @ModelAttribute TacoOrder order) {
+
+        if (order.getDeliveryName() == null) {
+            order.setDeliveryName(user.getFullname());
+        }
+        if (order.getDeliveryStreet() == null) {
+            order.setDeliveryStreet(user.getStreet());
+        }
+        if (order.getDeliveryCity() == null) {
+            order.setDeliveryCity(user.getCity());
+        }
+        if (order.getDeliveryState() == null) {
+            order.setDeliveryState(user.getState());
+        }
+        if (order.getDeliveryZip() == null) {
+            order.setDeliveryZip(user.getZip());
+        }
+
         return "orderForm";
     }
 
     @PostMapping
-    public String processOrder(@Valid TacoOrder order, Errors errors, SessionStatus sessionStatus) {
+    public String processOrder(@Valid TacoOrder order, Errors errors,
+                               SessionStatus sessionStatus, @AuthenticationPrincipal User user) {
         if (errors.hasErrors()) {
             return "orderForm";
         }
 
-        orderRepo.save(order);
+        order.setUser(user);
 
+        orderRepo.save(order);
         sessionStatus.setComplete();
+
         return "redirect:/";
     }
 }
